@@ -6,6 +6,7 @@ import datetime
 
 from bs4 import BeautifulSoup
 from pptx import Presentation
+from pptx.util import Inches
 
 
 # ############### - News - ################
@@ -222,6 +223,11 @@ def makePresentation(name='CPT Devens'):
         date.now().day) + '/' + str(
         date.now().year)
     subtitle.text = name
+    # add logo
+    img_path = 'logo_clear.png'
+    left = top = Inches(0.64)
+    height = Inches(0.6)
+    pic = slide.shapes.add_picture(img_path, left, top, height=height)
 
     # set up world news slide
     slide = prs.slides.add_slide(bullet_slide_layout)
