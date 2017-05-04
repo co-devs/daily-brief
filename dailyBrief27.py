@@ -205,7 +205,7 @@ def printReport():
 # Probably a way to shrink the size of this and make it more object oriented,
 # but I don't want to do that right now.
 # Can feed it your name for the title defaults to mine (because I can)
-def makePresentation(name='1LT Devens'):
+def makePresentation(name='CPT Devens'):
     # set up presentation
     prs = Presentation()
     title_slide_layout = prs.slide_layouts[0]
