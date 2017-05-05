@@ -24,7 +24,7 @@ def getHeadlines(feed):
 
 
 # Function takes an RSS URL, gets it parsed, and then asks for information
-def getNews(rss_url):
+def getNews(rss_url, limit=3):
     # Error if empty URL
     if rss_url == '':
         return 0
@@ -35,8 +35,8 @@ def getNews(rss_url):
     # Call getHeadlines() and combine the returned info into a list of tuples
     # headlines and summaries
     allheadlines.extend(getHeadlines(feed))
-    if 3 < len(allheadlines):
-        limit = 3
+    if limit < len(allheadlines):
+        pass
     else:
         limit = len(allheadlines)
     return allheadlines[0:limit]
@@ -238,7 +238,7 @@ def makePresentation(name='CPT Devens'):
     text_frame = slide.placeholders[1].text_frame
     paragraph_strs = []
     url = 'http://feeds.bbci.co.uk/news/world/rss.xml'
-    for pair in getNews(url):
+    for pair in getNews(url, 5):
         paragraph_strs.append(pair[0] + '. ' + pair[1])
     text_frame.clear()
     p = text_frame.paragraphs[0]
@@ -256,7 +256,7 @@ def makePresentation(name='CPT Devens'):
     text_frame = slide.placeholders[1].text_frame
     paragraph_strs = []
     url = 'http://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml'
-    for pair in getNews(url):
+    for pair in getNews(url, 5):
         paragraph_strs.append(pair[0] + '. ' + pair[1])
     text_frame.clear()
     p = text_frame.paragraphs[0]
@@ -333,7 +333,8 @@ def makePresentation(name='CPT Devens'):
         'http://wjbf.com/category/news/csra-news/',
         'http://www.scorespro.com/rss2/live-soccer.xml',
         'http://www.openweathermap.org',
-        'http://en.wikipedia.org'
+        'http://en.wikipedia.org',
+        'https://github.com/co-devs/daily-brief'
     ]
     # set up sources slide
     slide = prs.slides.add_slide(bullet_slide_layout)
@@ -351,12 +352,11 @@ def makePresentation(name='CPT Devens'):
         p.text = para_str
 
     dateStr = str(date.year)
-    if date.month < 10:
-        dateStr = dateStr + '0' + str(date.month) + str(date.day)
-    else:
-        dateStr = dateStr + str(date.month) + str(date.day)
+    dateStr = dateStr + str('{:02d}'.format(date.month)) + str(
+        '{:02d}'.format(date.day))
     prs.save('dailyBrief' + dateStr + '.pptx')
 
 
-# printReport()
-makePresentation()
+if __name__ == "__main__":
+    # printReport()
+    makePresentation()
