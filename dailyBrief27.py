@@ -64,7 +64,7 @@ def getLocalNews(url, limit=3, detail=False):
     return returnArticles
 
 
-def getScores(rss_url):
+def getScores(rss_url, limit=3):
     # Error if empty URL
     if rss_url == '':
         return 0
@@ -74,8 +74,8 @@ def getScores(rss_url):
     allScores = []
     returnScores = []
     allScores.extend(getHeadlines(feed))
-    if 3 < len(allScores):
-        limit = 3
+    if limit < len(allScores):
+        pass
     else:
         limit = len(allScores)
     for i in range(0, limit):
@@ -273,7 +273,7 @@ def makePresentation(name='CPT Devens'):
     # slide.placeholders[1].text = "This is a test"
     text_frame = slide.placeholders[1].text_frame
     url = 'http://wjbf.com/category/news/csra-news/'
-    paragraph_strs = getLocalNews(url)
+    paragraph_strs = getLocalNews(url, 5)
     text_frame.clear()
     p = text_frame.paragraphs[0]
     p.text = paragraph_strs[0]
@@ -289,7 +289,7 @@ def makePresentation(name='CPT Devens'):
     # slide.placeholders[1].text = "This is a test"
     text_frame = slide.placeholders[1].text_frame
     url = 'http://www.scorespro.com/rss2/live-soccer.xml'
-    paragraph_strs = getScores(url)
+    paragraph_strs = getScores(url, 5)
     text_frame.clear()
     p = text_frame.paragraphs[0]
     p.text = paragraph_strs[0]
